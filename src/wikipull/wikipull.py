@@ -6,10 +6,14 @@ the GNU AGPL-3.0-or-later. See LICENSE and README for more details.
 
 import pandas as pd
 import requests
+version = '0.1.0'
 
-def wikipull(wiki_id, target_data): # rolls it all up into one function
+def wikipull_version():
+    return version
+
+def wikipull(wiki_id, target_data, scrubbed): # rolls it all up into one function
     pulled_wiki = get_wiki_data(wiki_id, target_data)
-    nominal, upper_diff, lower_diff = parse_wiki_data(pulled_wiki)
+    nominal, upper_diff, lower_diff = parse_wiki_data(pulled_wiki, scrubbed)
     return nominal, upper_diff, lower_diff
 
 def get_wiki_data(wiki_id, target_data):
@@ -22,7 +26,7 @@ def get_wiki_data(wiki_id, target_data):
     pulled_value = pulled_row.iloc[0, 1]
     return pulled_value
     
-def parse_wiki_data(infotable_string):
+def parse_wiki_data(infotable_string, scrubbed):
     list_of_accepted_nums_filter = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
     list_of_accepted_symbols_filter =  ['+', '−', '-', '±']
     plus_minus_combined = False
