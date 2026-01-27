@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wikipull"
-version = "0.1.0"
+version = "1.0.0"
 authors = [
   { name="Ayrik Nabirahni", email="ayriknabirahni01@gmail.com" },
 ]
