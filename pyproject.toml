@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wikipull"
+version = "0.1.0"
+authors = [
+  { name="Ayrik Nabirahni", email="ayriknabirahni01@gmail.com" },
+]
+description = "A quick and easy module for retrieving Wikipedia table data."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests >= 2.32.5",
+    "lxml == 6.0.2",
+    "pandas < 3.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/kermitine/Wikipull"
+Issues = "https://github.com/kermitine/Wikipull/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"} # Tells setuptools to look in the 'src' directory
