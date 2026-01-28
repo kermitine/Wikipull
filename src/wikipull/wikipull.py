@@ -7,7 +7,7 @@ the GNU AGPL-3.0-or-later. See LICENSE and README for more details.
 import pandas as pd
 import requests
 
-version = '1.1.0'
+version = '1.1.1'
 
 def wikipull_version():
     return version
@@ -33,13 +33,13 @@ def wikipull(wiki_id: str, target_data: str, scrub_references: bool = True, scru
         pulled_value = pulled_row.iloc[0, 1]
         return pulled_value
         
-    def parse_wiki_data(infotable_string, scrub_references):
+    def parse_wiki_data(infotable_string):
         infotable_string_list = []
 
         for char in infotable_string: # put all processing in this loop
             if char == '[' and scrub_references == True: # STOP ONCE REFERENCE REACHED
                 break
-            if char == ' ' and scrub_spaces == True: # pass onto next char if space found
+            elif char.isspace() and scrub_spaces == True: # pass onto next char if space found
                 continue
             else:
                 infotable_string_list.append(char)
@@ -48,8 +48,8 @@ def wikipull(wiki_id: str, target_data: str, scrub_references: bool = True, scru
         return infotable_string_joined
 
     pulled_wiki = get_wiki_data(wiki_id, target_data)
-    infotable_string = parse_wiki_data(pulled_wiki, scrub_references)
+    infotable_string = parse_wiki_data(pulled_wiki)
     return infotable_string
 
 if __name__ == "__main__":
-    print(wikipull(wiki_id='kepler-22', target_data='Radius', scrub_references=True, scrub_spaces=True))
+    print(wikipull(wiki_id='kepler-22', target_data='Declination', scrub_references=True, scrub_spaces=True))
