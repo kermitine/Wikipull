@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wikipull"
-version = "1.0.0"
+version = "1.1.0"
 authors = [
   { name="Ayrik Nabirahni", email="ayriknabirahni01@gmail.com" },
 ]
@@ -17,7 +17,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "requests >= 2.32.5",
+    "requests == 2.32.5",
     "lxml == 6.0.2",
     "pandas < 3.0.0"
 ]

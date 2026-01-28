@@ -7,19 +7,20 @@ the GNU AGPL-3.0-or-later. See LICENSE and README for more details.
 import pandas as pd
 import requests
 
-version = '1.0.0'
+version = '1.1.0'
 
 def wikipull_version():
     return version
 
-def wikipull(wiki_id: str, target_data: str, scrub_references: bool = True):
+def wikipull(wiki_id: str, target_data: str, scrub_references: bool = True, scrub_spaces: bool = False):
     """
     Pulls data from a Wikipedia page's subject table
     
     Args:
         wiki_id (str): The wiki id for the page, which can be found in the last part of the Wikipedia url; E.g. "kepler-22" for https://en.wikipedia.org/wiki/Kepler-22
         target_data (str): The table row which you'd like to pull the data for; E.g. "Mass"
-        scrub_references (bool): Set to True by default. Whether you'd like the reference to be included (square brackets + number); E.g. G5V[4].
+        scrub_references (bool): Set to True by default. Whether you'd like the reference to be included (square brackets + number); E.g. "G5V[4]" -> "G5V"
+        scrub_spaces (bool): Set to False by default. Strips all whitespace characters from the string, which makes it easier to parse it further in the future by iterating; E.g. "1.66 +3.55 -2.77" -> "1.66+3.55-2.77".
     """
 
     def get_wiki_data(wiki_id, target_data):
@@ -38,6 +39,8 @@ def wikipull(wiki_id: str, target_data: str, scrub_references: bool = True):
         for char in infotable_string: # put all processing in this loop
             if char == '[' and scrub_references == True: # STOP ONCE REFERENCE REACHED
                 break
+            if char == ' ' and scrub_spaces == True: # pass onto next char if space found
+                continue
             else:
                 infotable_string_list.append(char)
 
@@ -47,3 +50,6 @@ def wikipull(wiki_id: str, target_data: str, scrub_references: bool = True):
     pulled_wiki = get_wiki_data(wiki_id, target_data)
     infotable_string = parse_wiki_data(pulled_wiki, scrub_references)
     return infotable_string
+
+if __name__ == "__main__":
+    print(wikipull(wiki_id='kepler-22', target_data='Radius', scrub_references=True, scrub_spaces=True))
